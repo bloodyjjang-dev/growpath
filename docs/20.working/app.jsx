@@ -3,6 +3,9 @@
    4주 만에 수익화 블로그
    ============================================================ */
 
+// Apps Script 웹앱 배포 후 발급되는 URL로 교체하세요.
+const APPLY_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyiraACHSxwze49nQfykYe5n-DDWS9wf1NE6i5pYBA3ZNP9mXg_ofzSu14pvy7Yb6UHSg/exec";
+
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "palette": "dawn",
   "headlineWeight": 700,
@@ -560,6 +563,12 @@ function Apply({ c }) {
     setErrors(e);
     if (Object.keys(e).length === 0) {
       setSubmitted(true);
+      fetch(APPLY_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(form),
+      }).catch(() => {});
     }
   }
 
